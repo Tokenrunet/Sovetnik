@@ -571,7 +571,7 @@ int LotDigits(double step)
 // Результат закрытых сегодня сделок этого советника
 double TodayClosedPL()
 {
-   datetime dayStart = TimeCurrent() - TimeCurrent() % 86400;
+   datetime dayStart = StringToTime(TimeToString(TimeCurrent(), TIME_DATE));   // 00:00 сегодня (сервер)
    double   pl = 0;
    for(int i = OrdersHistoryTotal() - 1; i >= 0; i--)
    {
@@ -593,7 +593,7 @@ string SetupText(Setup &s)
 void UpdatePanel()
 {
    double peak = GlobalVariableGet(g_gvPeak);
-   double dd   = (peak > 0) ? 100.0 * (peak - AccountEquity()) / peak : 0;
+   double dd   = (peak > 0) ? 100.0 * (peak - AccountEquity()) / peak : 0.0;
 
    string txt = "Liquidity Sweep Pro\n";
    txt += "Спред: " + DoubleToString((Ask - Bid) / Point, 0) + " п.\n";
